@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trạm Mộc – LML</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Open+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pap7jTt3owr/Z2UQ7+KsXnGmS4lw8LhZ1sRyxDO7PtLEHKPzOm8Fdj0a0Sksxt8ejZEV/pk2/1QwN2SpvZUp5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root {
+      --green: #B8E0D2;
+      --yellow: #FFF7AE;
+      --peach: #FFC6A4;
+      --white: #FFFFFF;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--white);
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--green);
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      flex-wrap: wrap;
+    }
+
+    header h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5em;
+      color: #333;
+      flex: 1 1 100%;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    nav a {
+      margin: 8px 10px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      transition: color 0.3s ease;
+      font-size: 0.95em;
+    }
+
+    nav a:hover {
+      color: var(--peach);
+    }
+
+    .hero {
+      background: linear-gradient(var(--yellow), var(--green));
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1.1em;
+    }
+
+    .hero button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: var(--peach);
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .hero button:hover {
+      background-color: #ffb388;
+    }
+
+    .section {
+      padding: 40px 20px;
+      max-width: 960px;
+      margin: auto;
+    }
+
+    .section h3 {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      color: #444;
+      text-align: center;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #f8f8f8;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease;
+      text-align: center;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .icon {
+      font-size: 2em;
+      color: var(--peach);
+      margin-bottom: 10px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    form input[type="email"] {
+      padding: 10px;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+
+    form button {
+      padding: 10px 20px;
+      background-color: var(--peach);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    footer {
+      background-color: var(--green);
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 480px) {
+      .hero h2 {
+        font-size: 1.5em;
+      }
+
+      .hero p {
+        font-size: 1em;
+      }
+
+      .section h3 {
+        font-size: 1.5em;
+      }
+
+      nav a {
+        font-size: 0.9em;
+        margin: 5px 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Trạm Mộc – LML</h1>
+    <nav>
+      <a href="#about"><i class="fas fa-tree"></i> Về Trạm Mộc</a>
+      <a href="#courses"><i class="fas fa-graduation-cap"></i> Khóa học</a>
+      <a href="#blog"><i class="fas fa-pen"></i> Blog</a>
+      <a href="#cham-moc"><i class="fas fa-heart"></i> Chạm Mộc</a>
+      <a href="#contact"><i class="fas fa-envelope"></i> Liên hệ</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2><i class="fas fa-seedling"></i> Nơi khởi nguồn sự tỉnh thức</h2>
+    <p>Hành trình sống mộc mạc, sáng tạo, tỉnh thức và thịnh vượng</p>
+    <button><i class="fas fa-play"></i> Bắt đầu hành trình</button>
+  </section>
+
+  <section class="section" id="about">
+    <h3><i class="fas fa-tree"></i> Về Trạm Mộc</h3>
+    <p>Trạm Mộc là nơi kết nối giữa công nghệ, cuộc sống, và sự tỉnh thức. Được sáng lập bởi LML – một developer, coach và người kể chuyện – Trạm Mộc mang đến giá trị từ trải nghiệm thực tế và tri thức tích lũy suốt hành trình sống và làm nghề.</p>
+  </section>
+
+  <section class="section" id="courses">
+    <h3><i class="fas fa-graduation-cap"></i> Khóa học nổi bật</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="icon"><i class="fas fa-database"></i></div>
+        <h4>SQL/PLSQL từ Cơ bản đến Chuyên sâu</h4>
+        <p>Khóa học thực chiến cho người đi làm trong lĩnh vực tài chính, ngân hàng.</p>
+      </div>
+      <div class="card">
+        <div class="icon"><i class="fas fa-brain"></i></div>
+        <h4>Lập trình Tỉnh Thức</h4>
+        <p>Kết hợp công nghệ và NLP để phát triển bản thân toàn diện.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="blog">
+    <h3><i class="fas fa-pen"></i> Blog & Bài viết</h3>
+    <p>Những chia sẻ về cuộc sống, kỹ năng, và hành trình trở thành phiên bản tốt hơn mỗi ngày.</p>
+  </section>
+
+  <section class="section" id="cham-moc">
+    <h3><i class="fas fa-heart"></i> Chạm Mộc</h3>
+    <p>Nơi bạn có thể chia sẻ cảm xúc, trải nghiệm tâm linh, chữa lành và kết nối bản thân.</p>
+  </section>
+
+  <section class="section" id="contact">
+    <h3><i class="fas fa-envelope"></i> Liên hệ</h3>
+    <p>Hãy để lại email để Trạm Mộc gửi đến bạn những món quà tỉnh thức:</p>
+    <form>
+      <input type="email" placeholder="Nhập email của bạn">
+      <button type="submit">Gửi</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2025 Trạm Mộc – LML. Lan tỏa tỉnh thức & tri thức.</p>
+  </footer>
+</body>
+</html>
