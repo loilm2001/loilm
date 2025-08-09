@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Trạm Mộc @LML - Landing Page Mẫu</title>
+<style>
+  :root {
+    --color-lime-light: #e7f5d1;
+    --color-lime-dark: #a8e063;
+    --color-orange: #f7971e;
+    --color-dark: #1e5128;
+    --color-white: #fff;
+    --radius: 14px;
+    --container-width: 1100px;
+    --font-primary: 'Poppins', sans-serif;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; padding: 0;
+    font-family: var(--font-primary);
+    background: var(--color-lime-light);
+    color: var(--color-dark);
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  .wrap {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 20px 24px 60px 24px;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--color-dark);
+    cursor: default;
+  }
+  nav a {
+    margin: 0 10px;
+    font-weight: 600;
+    color: var(--color-dark);
+  }
+  nav a.cta {
+    background: var(--color-orange);
+    padding: 10px 16px;
+    border-radius: var(--radius);
+    color: var(--color-white);
+  }
+  /* Hero full width with background image */
+  .hero {
+    position: relative;
+    height: 100vh;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding-left: 60px;
+    background: linear-gradient(135deg, rgba(168,224,99,0.75), rgba(247,151,30,0.75)), 
+      url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+  }
+  .hero-text {
+    max-width: 540px;
+    font-family: 'Playfair Display', serif;
+    animation: fadeInUp 1.2s ease forwards;
+    opacity: 0;
+  }
+  .hero-text h2 {
+    font-size: 42px;
+    margin-bottom: 16px;
+  }
+  .hero-text p {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 28px;
+  }
+  .btn-primary {
+    background: var(--color-orange);
+    color: var(--color-white);
+    padding: 14px 28px;
+    border-radius: var(--radius);
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s ease;
+  }
+  .btn-primary:hover {
+    background: #d6730a;
+  }
+
+  /* Sections */
+  section {
+    margin-top: 50px;
+  }
+  h3.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin-bottom: 24px;
+    color: var(--color-dark);
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 24px;
+  }
+  .service-card {
+    background: var(--color-white);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  .service-card:hover {
+    transform: translateY(-8px);
+  }
+  .service-icon {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 16px auto;
+    display: block;
+  }
+  .service-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .service-desc {
+    font-size: 15px;
+    color: #444;
+    text-align: center;
+  }
+
+  /* Giỏ hàng mini */
+  #cart-mini {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--color-orange);
+    color: var(--color-white);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    cursor: pointer;
+    user-select: none;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 10000;
+  }
+  #cart-mini svg {
+    width: 28px;
+    height: 28px;
+    fill: var(--color-white);
+  }
+  #cart-badge {
+    background: #fff;
+    color: var(--color-orange);
+    font-weight: 700;
+    border-radius: 50%;
+    padding: 4px 10px;
+    font-size: 14px;
+    user-select: none;
+  }
+
+  /* Modal giỏ hàng */
+  #modal-cart {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+  }
+  #modal-cart.show {
+    display: flex;
+  }
+  #modal-content {
+    background: var(--color-white);
+    border-radius: var(--radius);
+    max-width: 420px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 24px 32px 32px 32px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    position: relative;
+  }
+  #modal-content h4 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 20px;
+  }
+  #modal-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+  }
+  #modal-content ul li {
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+  #modal-content ul li span {
+    font-weight: 600;
+  }
+  #modal-content button {
+    background: var(--color-orange);
+    border: none;
+    color: var(--color-white);
+    padding: 10px 18px;
+    font-weight: 700;
+    border-radius: var(--radius);
+    cursor: pointer;
+    margin-right: 16px;
+  }
+  #modal-content .close-btn {
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    font-size: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-dark);
+    font-weight: 700;
+  }
+
+  /* Nhân vật cố định góc dưới phải */
+  #character-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 120px;
+    cursor: pointer;
+    z-index: 10002;
+    user-select: none;
+  }
+  #character-svg {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    background: linear-gradient(135deg, var(--color-lime-dark), var(--color-orange));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #character-popup {
+    position: fixed;
+    bottom: 150px;
+    right: 20px;
+    width: 280px;
+    background: var(--color-white);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    font-size: 15px;
+    line-height: 1.4;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: 10003;
+  }
+  #character-popup.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  #character-popup p {
+    margin: 0 0 8px 0;
+  }
+  #character-popup button.close-btn {
+    background: var(--color-orange);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 12px;
+    color: var(--color-white);
+    cursor: pointer;
+    font-weight: 600;
+    float: right;
+  }
+  /* Animation mắt đơn giản */
+  .eye {
+    animation: blink 5s infinite;
+  }
+  @keyframes blink {
+    0%, 95%, 100% { transform: scaleY(1); }
+    97% { transform: scaleY(0.1); }
+  }
+
+  /* Ngôn ngữ toggle */
+  #lang-switcher {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: var(--color-lime-dark);
+    color: var(--color-white);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    z-index: 10005;
+  }
+  #lang-switcher:hover {
+    background: #92c74b;
+  }
+
+  /* Animations fade in up */
+  @keyframes fadeInUp {
+    from {opacity: 0; transform: translateY(30px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+</style>
+</head>
+<body>
+
+<div id="lang-switcher" aria-label="Toggle language" tabindex="0">VN</div>
+
+<div class="wrap">
+  <header>
+    <h1>Trạm Mộc @LML</h1>
+    <nav>
+      <a href="#services" data-lang-key="nav_services">Dịch vụ</a>
+      <a href="#shop" data-lang-key="nav_shop">Cửa hàng</a>
+      <a href="#contact" data-lang-key="nav_contact">Liên hệ</a>
+    </nav>
+  </header>
+
+  <section class="hero" role="banner" aria-label="Hero section with introduction">
+    <div class="hero-text">
+      <h2 data-lang-key="hero_title">Khám phá thế giới Trạm Mộc @LML</h2>
+      <p data-lang-key="hero_subtitle">Nơi hội tụ những sản phẩm tinh chọn và dịch vụ phát triển cá nhân, công nghệ mộc mạc.</p>
+      <button class="btn-primary" id="btn-explore" data-lang-key="hero_btn">Bắt đầu khám phá</button>
+    </div>
+  </section>
+
+  <section id="services" aria-label="Các dịch vụ của Trạm Mộc">
+    <h3 class="section-title" data-lang-key="services_title">Dịch vụ của chúng tôi</h3>
+    <div class="services-grid">
+      <div class="service-card" data-role="teacher" tabindex="0" aria-describedby="desc-teacher" role="button">
+        <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="60" r="58" fill="url(#grad-teacher)"/>
+          <defs>
+            <linearGradient id="grad-teacher" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#82c0cc"/>
+              <stop offset="100%" stop-color="#1c3d5a"/>
+            </linearGradient>
+          </defs>
+          <circle cx="60" cy="65" r="30" fill="#fff" />
+          <rect x="40" y="90" width="40" height="10" fill="#1c3d5a" rx="4"/>
+          <path d="M45 80 L75 80" stroke="#1c3d5a" stroke-width="4" stroke-linecap="round" />
+          <ellipse cx="45" cy="60" rx="6" ry="8" fill="#3b3b3b" />
+          <ellipse cx="75" cy="60" rx="6" ry="8" fill="#3b3b3b" />
+        </svg>
+        <h4 class="service-title" data-lang-key="service_teacher_title">Khóa học online</h4>
+        <p class="service-desc" id="desc-teacher" data-lang-key="service_teacher_desc">Học tập hiệu quả cùng người thầy thân thiện và giàu kinh nghiệm.</p>
+      </div>
+
+      <div class="service-card" data-role="coach" tabindex="0" aria-describedby="desc-coach" role="button">
+        <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="60" r="58" fill="url(#grad-coach)" />
+          <defs>
+            <linearGradient id="grad-coach" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#f5a623"/>
+              <stop offset="100%" stop-color="#d94e12"/>
+            </linearGradient>
+          </defs>
+          <circle cx="60" cy="65" r="30" fill="#fff" />
+          <path d="M45 80 L75 80" stroke="#d94e12" stroke-width="6" stroke-linecap="round" />
+          <ellipse cx="45" cy="60" rx="6" ry="8" fill="#3b3b3b" />
+          <ellipse cx="75" cy="60" rx="6" ry="8" fill="#3b3b3b" />
+          <circle cx="60" cy="90" r="8" fill="#f5a623" />
+        </svg>
+        <h4 class="service-title" data-lang-key="service_coach_title">Dịch vụ coach 1-1</h4>
+        <p class="service-desc" id="desc-coach" data-lang-key="service_coach_desc">Đồng hành phát triển cá nhân cùng chuyên gia tận tâm.</p>
+      </div>
+
+      <div class="service-card" data-role="tech" tabindex="0" aria-describedby="desc-tech" role="button">
+        <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="60" r="58" fill="url(#grad-tech)" />
+          <defs>
+            <linearGradient id="grad-tech" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#6ab04c"/>
+              <stop offset="100%" stop-color="#1e5128"/>
+            </linearGradient>
+          </defs>
+          <circle cx="60" cy="65" r="30" fill="#fff" />
+          <rect x="40" y="80" width="40" height="12" fill="#1e5128" rx="6" />
+          <line x1="50" y1="80" x2="50" y2="92" stroke="#6ab04c" stroke-width="3" />
+          <line x1="70" y1="80" x2="70" y2="92" stroke="#6ab04c" stroke-width="3" />
+          <ellipse cx="45" cy="60" rx="6" ry="8" fill="#3b3b3b" />
+          <ellipse cx="75" cy="60" rx="6" ry="8" fill="#3b3b3b" />
+        </svg>
+        <h4 class="service-title" data-lang-key="service_tech_title">Phần mềm &amp; giải pháp CNTT</h4>
+        <p class="service-desc" id="desc-tech" data-lang-key="service_tech_desc">Giải pháp công nghệ giúp tối ưu hóa hiệu suất kinh doanh.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="shop" aria-label="Cửa hàng sản phẩm">
+    <h3 class="section-title" data-lang-key="shop_title">Sản phẩm nổi bật</h3>
+    <div class="services-grid">
+      <div class="service-card" tabindex="0" role="button" data-product="HerbalTea">
+        <img src="https://images.unsplash.com/photo-1524594154900-8f9b8f2a6d9a?q=80" alt="Trà thảo mộc" style="width:100%;border-radius:12px;"/>
+        <h4 class="service-title" data-lang-key="product_tea_title">Trà thảo mộc</h4>
+        <p class="service-desc" data-lang-key="product_tea_price">₫199.000</p>
+        <button class="btn-primary btn-add-cart" data-product="Trà thảo mộc">Thêm vào giỏ</button>
+      </div>
+      <div class="service-card" tabindex="0" role="button" data-product="Notebook">
+        <img src="https://images.unsplash.com/photo-1503602642458-232111445657?q=80" alt="Sổ tay" style="width:100%;border-radius:12px;"/>
+        <h4 class="service-title" data-lang-key="product_notebook_title">Sổ tay Trạm Mộc</h4>
+        <p class="service-desc" data-lang-key="product_notebook_price">₫129.000</p>
+        <button class="btn-primary btn-add-cart" data-product="Sổ tay Trạm Mộc">Thêm vào giỏ</button>
+      </div>
+      <div class="service-card" tabindex="0" role="button" data-product="Course">
+        <img src="https://images.unsplash.com/photo-1559054969-7a69f1b109d6?q=80" alt="Khóa học" style="width:100%;border-radius:12px;"/>
+        <h4 class="service-title" data-lang-key="product_course_title">Khóa học Lắng nghe nhân sự</h4>
+        <p class="service-desc" data-lang-key="product_course_price">₫299.000</p>
+        <button class="btn-primary btn-add-cart" data-product="Khóa học Lắng nghe nhân sự">Thêm vào giỏ</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Giỏ hàng mini -->
+<div id="cart-mini" aria-label="Giỏ hàng, nhấn để xem chi tiết" tabindex="0" role="button" aria-haspopup="dialog">
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M7 18c-1.1046 0-2 .8954-2 2s.8954 2 2 2 2-.8954 2-2-.8954-2-2-2zm10 0c-1.1046 0-2 .8954-2 2s.8954 2 2 2 2-.8954 2-2-.8954-2-2-2zM7.68 14.72l-.94-2.83L7.33 11H18v-2H7l1.5-5H3v2h2l3.6 7.59-1.35 2.44c-.08.14-.13.31-.13.48 0 .55.45 1 1 1h12v-2H8.53c-.14 0-.25-.11-.25-.25z"/></svg>
+  <span id="cart-badge" aria-live="polite" aria-atomic="true" aria-relevant="additions removals">0</span>
+  Giỏ hàng
+</div>
+
+<!-- Modal giỏ hàng -->
+<div id="modal-cart" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc">
+  <div id="modal-content">
+    <button class="close-btn" aria-label="Đóng">&times;</button>
+    <h4 id="modal-title">Giỏ hàng của bạn</h4>
+    <ul id="cart-list"></ul>
+    <button id="clear-cart-btn">Xóa tất cả</button>
+    <button id="checkout-btn">Thanh toán demo</button>
+  </div>
+</div>
+
+<!-- Nhân vật cố định -->
+<div id="character-container" tabindex="0" aria-label="Nhân vật thương hiệu">
+  <div id="character-svg" aria-hidden="true"></div>
+  <div id="character-popup" role="tooltip" aria-live="polite" aria-atomic="true">
+    <button class="close-btn" aria-label="Đóng nhân vật">&times;</button>
+    <p id="character-message"></p>
+  </div>
+</div>
+
+<script>
+  // Dữ liệu đa ngôn ngữ (VN/EN)
+  const translations = {
+    vn: {
+      nav_services: "Dịch vụ",
+      nav_shop: "Cửa hàng",
+      nav_contact: "Liên hệ",
+      hero_title: "Khám phá thế giới Trạm Mộc @LML",
+      hero_subtitle: "Nơi hội tụ những sản phẩm tinh chọn và dịch vụ phát triển cá nhân, công nghệ mộc mạc.",
+      hero_btn: "Bắt đầu khám phá",
+      services_title: "Dịch vụ của chúng tôi",
+      service_teacher_title: "Khóa học online",
+      service_teacher_desc: "Học tập hiệu quả cùng người thầy thân thiện và giàu kinh nghiệm.",
+      service_coach_title: "Dịch vụ coach 1-1",
+      service_coach_desc: "Đồng hành phát triển cá nhân cùng chuyên gia tận tâm.",
+      service_tech_title: "Phần mềm & giải pháp CNTT",
+      service_tech_desc: "Giải pháp công nghệ giúp tối ưu hóa hiệu suất kinh doanh.",
+      shop_title: "Sản phẩm nổi bật",
+      product_tea_title: "Trà thảo mộc",
+      product_tea_price: "₫199.000",
+      product_notebook_title: "Sổ tay Trạm Mộc",
+      product_notebook_price: "₫129.000",
+      product_course_title: "Khóa học Lắng nghe nhân sự",
+      product_course_price: "₫299.000",
+      cart_empty: "Giỏ hàng trống",
+      cart_checkout: "Thanh toán demo",
+      cart_clear: "Xóa tất cả",
+      cart_title: "Giỏ hàng của bạn",
+      character_greeting_teacher: "Xin chào! Tôi là người thầy, sẵn sàng hỗ trợ bạn học tập hiệu quả.",
+      character_greeting_coach: "Chào bạn! Tôi là huấn luyện viên, đồng hành phát triển bản thân cùng bạn.",
+      character_greeting_tech: "Xin chào! Tôi là chuyên gia công nghệ, giúp bạn tối ưu giải pháp CNTT.",
+      character_default: "Chào mừng bạn đến Trạm Mộc @LML!",
+      cart_add_success: "Đã thêm vào giỏ hàng",
+      cart_remove_success: "Đã xóa khỏi giỏ hàng",
+    },
+    en: {
+      nav_services: "Services",
+      nav_shop: "Shop",
+      nav_contact: "Contact",
+      hero_title: "Discover the World of Tram Moc @LML",
+      hero_subtitle: "Curated products and personal development services, natural tech solutions.",
+      hero_btn: "Start Exploring",
+      services_title: "Our Services",
+      service_teacher_title: "Online Courses",
+      service_teacher_desc: "Learn effectively with friendly, experienced teachers.",
+      service_coach_title: "1-on-1 Coaching",
+      service_coach_desc: "Personal growth with dedicated experts.",
+      service_tech_title: "Software & IT Solutions",
+      service_tech_desc: "Tech solutions to optimize your business.",
+      shop_title: "Featured Products",
+      product_tea_title: "Herbal Tea",
+      product_tea_price: "₫199,000",
+      product_notebook_title: "Tram Moc Notebook",
+      product_notebook_price: "₫129,000",
+      product_course_title: "Listening Skills Course",
+      product_course_price: "₫299,000",
+      cart_empty: "Cart is empty",
+      cart_checkout: "Demo Checkout",
+      cart_clear: "Clear All",
+      cart_title: "Your Cart",
+      character_greeting_teacher: "Hello! I'm your teacher, ready to help you learn effectively.",
+      character_greeting_coach: "Hi! I'm your coach, here to support your personal growth.",
+      character_greeting_tech: "Hello! I'm your tech expert, helping optimize IT solutions.",
+      character_default: "Welcome to Tram Moc @LML!",
+      cart_add_success: "Added to cart",
+      cart_remove_success: "Removed from cart",
+    }
+  };
+
+  let lang = 'vn';
+
+  // Update all texts by lang key
+  function updateLanguage() {
+    document.querySelectorAll('[data-lang-key]').forEach(el => {
+      const key = el.getAttribute('data-lang-key');
+      if (translations[lang] && translations[lang][key]) {
+        el.textContent = translations[lang][key];
+      }
+    });
+    updateCharacterMessage(currentRole || null);
+  }
+
+  // Language switcher toggle
+  const langSwitcher = document.getElementById('lang-switcher');
+  langSwitcher.addEventListener('click', () => {
+    lang = (lang === 'vn') ? 'en' : 'vn';
+    langSwitcher.textContent = lang.toUpperCase();
+    updateLanguage();
+  });
+  langSwitcher.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') langSwitcher.click();
+  });
+
+  // Nhân vật icons (SVG strings)
+  const characterSvgs = {
+    teacher: `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-label="Người thầy" role="img">
+      <circle cx="60" cy="60" r="58" fill="url(#grad-teacher)" />
+      <defs><linearGradient id="grad-teacher" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#82c0cc"/>
+        <stop offset="100%" stop-color="#1c3d5a"/>
+      </linearGradient></defs>
+      <circle cx="60" cy="65" r="30" fill="#fff" />
+      <rect x="40" y="90" width="40" height="10" fill="#1c3d5a" rx="4"/>
+      <path d="M45 80 L75 80" stroke="#1c3d5a" stroke-width="4" stroke-linecap="round" />
+      <ellipse cx="45" cy="60" rx="6" ry="8" fill="#3b3b3b" />
+      <ellipse cx="75" cy="60" rx="6" ry="8" fill="#3b3b3b" />
+    </svg>`,
+    coach: `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-label="Người huấn luyện" role="img">
+      <circle cx="60" cy="60" r="58" fill="url(#grad-coach)" />
+      <defs><linearGradient id="grad-coach" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#f5a623"/>
+        <stop offset="100%" stop-color="#d94e12"/>
+      </linearGradient></defs>
+      <circle cx="60" cy="65" r="30" fill="#fff" />
+      <path d="M45 80 L75 80" stroke="#d94e12" stroke-width="6" stroke-linecap="round" />
+      <ellipse cx="45" cy="60" rx="6" ry="8" fill="#3b3b3b" />
+      <ellipse cx="75" cy="60" rx="6" ry="8" fill="#3b3b3b" />
+      <circle cx="60" cy="90" r="8" fill="#f5a623" />
+    </svg>`,
+    tech: `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-label="Chuyên gia công nghệ" role="img">
+      <circle cx="60" cy="60" r="58" fill="url(#grad-tech)" />
+      <defs><linearGradient id="grad-tech" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#6ab04c"/>
+        <stop offset="100%" stop-color="#1e5128"/>
+      </linearGradient></defs>
+      <circle cx="60" cy="65" r="30" fill="#fff" />
+      <rect x="40" y="80" width="40" height="12" fill="#1e5128" rx="6" />
+      <line x1="50" y1="80" x2="50" y2="92" stroke="#6ab04c" stroke-width="3" />
+      <line x1="70" y1="80" x2="70" y2="92" stroke="#6ab04c" stroke-width="3" />
+      <ellipse cx="45" cy="60" rx="6" ry="8" fill="#3b3b3b" />
+      <ellipse cx="75" cy="60" rx="6" ry="8" fill="#3b3b3b" />
+    </svg>`
+  };
+
+  const characterMessages = {
+    teacher: () => translations[lang].character_greeting_teacher,
+    coach: () => translations[lang].character_greeting_coach,
+    tech: () => translations[lang].character_greeting_tech,
+    default: () => translations[lang].character_default,
+  };
+
+  // Character container
+  const characterContainer = document.getElementById('character-container');
+  const characterSvgEl = document.getElementById('character-svg');
+  const characterPopup = document.getElementById('character-popup');
+  const characterMessageEl = document.getElementById('character-message');
+  let currentRole = null;
+  let popupTimeout;
+
+  // Show character message
+  function updateCharacterMessage(role) {
+    if (!role) {
+      characterMessageEl.textContent = characterMessages.default();
+      characterSvgEl.innerHTML = characterSvgs.teacher;
+      currentRole = null;
+    } else {
+      characterMessageEl.textContent = characterMessages[role]();
+      characterSvgEl.innerHTML = characterSvgs[role];
+      currentRole = role;
+    }
+  }
+  updateCharacterMessage(null);
+
+  // Toggle character popup
+  characterContainer.addEventListener('click', () => {
+    if (characterPopup.classList.contains('show')) {
+      characterPopup.classList.remove('show');
+    } else {
+      characterPopup.classList.add('show');
+      clearTimeout(popupTimeout);
+      popupTimeout = setTimeout(() => {
+        characterPopup.classList.remove('show');
+      }, 6000);
+    }
+  });
+
+  // Close popup button
+  characterPopup.querySelector('.close-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    characterPopup.classList.remove('show');
+  });
+
+  // Dịch vụ click chọn nhân vật (thầy, coach, tech)
+  document.querySelectorAll('.service-card[data-role]').forEach(card => {
+    card.addEventListener('click', () => {
+      const role = card.getAttribute('data-role');
+      updateCharacterMessage(role);
+      characterPopup.classList.add('show');
+      clearTimeout(popupTimeout);
+      popupTimeout = setTimeout(() => {
+        characterPopup.classList.remove('show');
+      }, 6000);
+    });
+    card.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        card.click();
+      }
+    });
+  });
+
+  // Giỏ hàng logic
+  const cartMini = document.getElementById('cart-mini');
+  const cartBadge = document.getElementById('cart-badge');
+  const modalCart = document.getElementById('modal-cart');
+  const modalContent = document.getElementById('modal-content');
+  const cartList = document.getElementById('cart-list');
+  const clearCartBtn = document.getElementById('clear-cart-btn');
+  const checkoutBtn = document.getElementById('checkout-btn');
+
+  function getCart() {
+    return JSON.parse(localStorage.getItem('tramMocCart') || '[]');
+  }
+  function saveCart(cart) {
+    localStorage.setItem('tramMocCart', JSON.stringify(cart));
+  }
+  function updateCartBadge() {
+    const count = getCart().length;
+    cartBadge.textContent = count;
+    cartBadge.style.display = count > 0 ? 'inline-block' : 'none';
+  }
+  function renderCartList() {
+    const cart = getCart();
+    cartList.innerHTML = '';
+    if (cart.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = translations[lang].cart_empty;
+      cartList.appendChild(li);
+    } else {
+      cart.forEach((item, i) => {
+        const li = document.createElement('li');
+        li.innerHTML = `<span>${item}</span> <button aria-label="Xóa ${item}" data-index="${i}">&times;</button>`;
+        cartList.appendChild(li);
+      });
+    }
+  }
+  function addToCart(item) {
+    const cart = getCart();
+    cart.push(item);
+    saveCart(cart);
+    updateCartBadge();
+    renderCartList();
+    alert(translations[lang].cart_add_success + ': ' + item);
+  }
+  function removeFromCart(index) {
+    const cart = getCart();
+    if (index >= 0 && index < cart.length) {
+      cart.splice(index, 1);
+      saveCart(cart);
+      updateCartBadge();
+      renderCartList();
+      alert(translations[lang].cart_remove_success);
+    }
+  }
+  function clearCart() {
+    if (confirm(translations[lang].cart_clear + '?')) {
+      saveCart([]);
+      updateCartBadge();
+      renderCartList();
+    }
+  }
+
+  updateCartBadge();
+
+  // Mở modal giỏ hàng
+  cartMini.addEventListener('click', () => {
+    renderCartList();
+    modalCart.classList.add('show');
+  });
+  cartMini.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      cartMini.click();
+    }
+  });
+
+  // Đóng modal
+  modalContent.querySelector('.close-btn').addEventListener('click', () => {
+    modalCart.classList.remove('show');
+  });
+
+  // Xóa mục trong giỏ
+  cartList.addEventListener('click', e => {
+    if (e.target.tagName === 'BUTTON') {
+      const index = parseInt(e.target.getAttribute('data-index'), 10);
+      removeFromCart(index);
+    }
+  });
+
+  // Xóa tất cả
+  clearCartBtn.addEventListener('click', () => clearCart());
+
+  // Thanh toán demo
+  checkoutBtn.addEventListener('click', () => {
+    alert(translations[lang].cart_checkout + ' - Chức năng demo');
+  });
+
+  // Thêm vào giỏ từ button
+  document.querySelectorAll('.btn-add-cart').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      addToCart(btn.getAttribute('data-product'));
+    });
+  });
+
+  // Khởi tạo hiển thị ban đầu
+  updateLanguage();
+
+</script>
+</body>
+</html>
